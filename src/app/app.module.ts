@@ -3,6 +3,7 @@ import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
+import { LocationListComponent } from './location-list/location-list.component';
 
 @NgModule({
   bootstrap: [
@@ -14,7 +15,8 @@ import { MainComponent } from './main/main.component';
   ],
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
+    LocationListComponent
   ],
   providers: [
   ],

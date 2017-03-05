@@ -1,8 +1,6 @@
 <StackLayout>
   <Label text="test" height="50%"></Label>
-<ListView [items]="savedLocations" (itemTap)="onItemTap($event)">
-    <template let-item="item">
-            <Label [text]='item.name'></Label>
-    </template>
-</ListView>
+  <StackLayout height="50%">
+    <app-location-list></app-location-list>
+  </StackLayout>
 </StackLayout>
