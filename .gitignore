@@ -44,3 +44,7 @@ Thumbs.db
 src/node_modules
 src/platforms
 src/app/**/*.js
+
+# Api Key Data
+src/app/App_Resources/Android/values/nativescript_google_maps_api\.xml
+src/app/google-maps-api-config\.json
