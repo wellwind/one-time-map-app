@@ -1,6 +1,10 @@
-<Label text="latitude: "></Label>
-<Label [text]="location?.latitude"></Label>
-<Label text="longitude: "></Label>
-<Label [text]="location?.longitude"></Label>
-
-
+<GridLayout>
+  <MapView
+    [latitude]="location?.latitude" 
+    [longitude]="location?.longitude"
+    zoom="15"
+    bearing="0"
+    tilt="0"
+    padding="0"
+    (mapReady)="onMapReady($event)"></MapView>
+</GridLayout>

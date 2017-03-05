@@ -1,6 +1,12 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { ElementRef, ViewChild, Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Accuracy } from 'ui/enums';
 import * as geo from 'nativescript-geolocation';
+import * as GoogleMaps from 'nativescript-google-maps-sdk';
+import * as GoogleMapsUtils from 'nativescript-google-maps-utils';
+import { Page } from 'ui/page';
+import { registerElement } from 'nativescript-angular/element-registry';
+
+registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
 
 @Component({
   moduleId: module.id,
@@ -11,7 +17,8 @@ import * as geo from 'nativescript-geolocation';
 export class LocationMapComponent implements OnInit, OnDestroy {
   self = this;
   watchLocationId;
-  location;
+  location: geo.Location;
+  map: GoogleMaps.MapView;
 
   constructor(private zone: NgZone) { }
 
@@ -28,7 +35,6 @@ export class LocationMapComponent implements OnInit, OnDestroy {
       updateDistance: 0,
       minimumUpdateTime: 1000 * 20
     };
-
     this.watchLocationId = geo.watchLocation(
       (loc) => this.zone.run(() => { this.handleWatchLocationSuccess(loc); }),
       this.handleWatchLocationError,
@@ -38,12 +44,23 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   handleWatchLocationSuccess(loc) {
     if (loc) {
       this.location = loc;
+
+      const marker = new GoogleMaps.Marker();
+      marker.position = GoogleMaps.Position.positionFromLatLng(this.location.latitude, this.location.longitude);
+      marker.title = 'You Are Here';
+      marker.userData = { index: 1 };
+      this.map.removeAllMarkers();
+      this.map.addMarker(marker);
     }
   }
 
   handleWatchLocationError(error) {
     console.log('Error: ' + error.message);
   }
+
+  onMapReady($event) {
+    this.map = $event.object;
+  };
 
   ngOnDestroy() {
     if (this.watchLocationId) {
