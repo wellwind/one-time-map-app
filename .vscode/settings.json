@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "**/*.js": {
+      "when": "$(basename).ts"
+    },
+    "**/*.js.map": true
+},
+"angulardoc.repoId": "f77bfe0e-2916-42cb-8358-1a5ff761e1e7",
+"angulardoc.lastSync": 0
+}
