@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { LocationListComponent } from './location-list/location-list.component';
+import { LocationMapComponent } from './location-map/location-map.component';
 
 @NgModule({
   bootstrap: [
@@ -16,7 +17,8 @@ import { LocationListComponent } from './location-list/location-list.component';
   declarations: [
     AppComponent,
     MainComponent,
-    LocationListComponent
+    LocationListComponent,
+    LocationMapComponent
   ],
   providers: [
   ],
