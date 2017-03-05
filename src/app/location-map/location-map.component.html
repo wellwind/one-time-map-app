@@ -1,10 +1,14 @@
 <GridLayout>
   <MapView
-    [latitude]="location?.latitude" 
+    [latitude]="location?.latitude"
     [longitude]="location?.longitude"
     zoom="15"
     bearing="0"
     tilt="0"
     padding="0"
     (mapReady)="onMapReady($event)"></MapView>
+
+    <AbsoluteLayout>
+    <Button class="save-button" text="記住這裡" left="5" top="5"></Button>
+  </AbsoluteLayout>
 </GridLayout>

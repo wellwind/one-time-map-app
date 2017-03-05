@@ -47,8 +47,6 @@ export class LocationMapComponent implements OnInit, OnDestroy {
 
       const marker = new GoogleMaps.Marker();
       marker.position = GoogleMaps.Position.positionFromLatLng(this.location.latitude, this.location.longitude);
-      marker.title = 'You Are Here';
-      marker.userData = { index: 1 };
       this.map.removeAllMarkers();
       this.map.addMarker(marker);
     }
