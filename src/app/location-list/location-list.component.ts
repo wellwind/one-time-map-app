@@ -12,15 +12,19 @@ import { Observable } from 'rxjs/Observable';
 })
 export class LocationListComponent implements OnInit {
 
+  _savedLocations: SavedLocation[];
   savedLocations: Observable<SavedLocation[]>;
 
   constructor(private service: OneTimeMapService, private zone: NgZone) { }
 
   ngOnInit() {
     this.savedLocations = this.service.savedLocation;
+    this.savedLocations.subscribe((locations) => {
+      this._savedLocations = locations;
+    });
   }
 
   onItemTap($event) {
-    console.log(this.savedLocations[$event.index].Name);
+    console.log(this._savedLocations[$event.index].Name);
   }
 }
