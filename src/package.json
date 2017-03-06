@@ -21,6 +21,7 @@
     "@angular/platform-browser": "2.4.3",
     "@angular/platform-browser-dynamic": "2.4.3",
     "@angular/router": "3.4.3",
+    "moment": "^2.17.1",
     "nativescript-angular": "1.4.0",
     "nativescript-geolocation": "0.0.19",
     "nativescript-google-maps-sdk": "^1.4.3",
