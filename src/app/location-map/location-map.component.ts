@@ -1,10 +1,13 @@
+import { OneTimeMapService } from './../one-time-map.service';
 import { ElementRef, ViewChild, Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Accuracy } from 'ui/enums';
+import { Page } from 'ui/page';
+import * as Dialogs from 'ui/dialogs';
 import * as geo from 'nativescript-geolocation';
 import * as GoogleMaps from 'nativescript-google-maps-sdk';
 import * as GoogleMapsUtils from 'nativescript-google-maps-utils';
-import { Page } from 'ui/page';
 import { registerElement } from 'nativescript-angular/element-registry';
+import * as moment from 'moment';
 
 registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
 
@@ -20,7 +23,7 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   location: geo.Location;
   map: GoogleMaps.MapView;
 
-  constructor(private zone: NgZone) { }
+  constructor(private zone: NgZone, private service: OneTimeMapService) { }
 
   ngOnInit() {
     if (!geo.isEnabled()) {
@@ -64,5 +67,23 @@ export class LocationMapComponent implements OnInit, OnDestroy {
     if (this.watchLocationId) {
       geo.clearWatch(this.watchLocationId);
     }
+  }
+
+  rememberHere() {
+    const options = {
+      title: '給這地方一個名稱方便記憶吧',
+      defaultText: moment().format('YYYY/MM/DD hh:mm:ss'),
+      inputType: Dialogs.inputType.text,
+      okButtonText: '儲存',
+      cancelButtonText: '取消'
+    };
+    Dialogs.prompt(options).then((result: Dialogs.PromptResult) => {
+      if (result.result) {
+        this.service.remberLocation(
+          result.text,
+          this.location.latitude,
+          this.location.longitude);
+      }
+    });
   }
 }
