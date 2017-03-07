@@ -1,6 +1,8 @@
 import { OneTimeMapService } from './../one-time-map.service';
 import { ElementRef, ViewChild, Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Accuracy } from 'ui/enums';
+import { Image } from 'ui/image';
+import * as ImageSource from 'image-source';
 import { Page } from 'ui/page';
 import * as Dialogs from 'ui/dialogs';
 import * as geo from 'nativescript-geolocation';
@@ -52,9 +54,9 @@ export class LocationMapComponent implements OnInit, OnDestroy {
 
       this._addCurrentLocationToMap();
       this._addSelectedLocationToMap();
-
     }
   }
+
 
   private _addCurrentLocationToMap() {
     const marker = new GoogleMaps.Marker();
@@ -63,12 +65,16 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   }
 
   private _addSelectedLocationToMap() {
-    console.log(this.service.selectLocation);
     if (this.service.selectedLocation) {
       const selectedLocationMarker = new GoogleMaps.Marker();
       selectedLocationMarker.position = GoogleMaps.Position.positionFromLatLng(
         this.service.selectedLocation.Latitude,
         this.service.selectedLocation.Longitude);
+
+      const icon = new Image();
+      icon.imageSource = ImageSource.fromResource('map-marker-orange.png');
+      selectedLocationMarker.icon = icon;
+
       this.map.addMarker(selectedLocationMarker);
     }
   }
