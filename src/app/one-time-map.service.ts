@@ -9,6 +9,7 @@ export class OneTimeMapService {
   private _locations: SavedLocation[];
   private _savedLocationSubscriber: any;
 
+  selectedLocation: SavedLocation;
   savedLocation: Observable<SavedLocation[]>;
 
   constructor(private zone: NgZone) {
@@ -29,5 +30,9 @@ export class OneTimeMapService {
     this._locations.push(toAddLocation);
     localStorage.setItem('locations', JSON.stringify(this._locations));
     this._savedLocationSubscriber.next(this._locations);
+  }
+
+  selectLocation(index) {
+    this.selectedLocation = this._locations[index];
   }
 }

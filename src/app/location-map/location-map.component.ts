@@ -48,10 +48,28 @@ export class LocationMapComponent implements OnInit, OnDestroy {
     if (loc) {
       this.location = loc;
 
-      const marker = new GoogleMaps.Marker();
-      marker.position = GoogleMaps.Position.positionFromLatLng(this.location.latitude, this.location.longitude);
       this.map.removeAllMarkers();
-      this.map.addMarker(marker);
+
+      this._addCurrentLocationToMap();
+      this._addSelectedLocationToMap();
+
+    }
+  }
+
+  private _addCurrentLocationToMap() {
+    const marker = new GoogleMaps.Marker();
+    marker.position = GoogleMaps.Position.positionFromLatLng(this.location.latitude, this.location.longitude);
+    this.map.addMarker(marker);
+  }
+
+  private _addSelectedLocationToMap() {
+    console.log(this.service.selectLocation);
+    if (this.service.selectedLocation) {
+      const selectedLocationMarker = new GoogleMaps.Marker();
+      selectedLocationMarker.position = GoogleMaps.Position.positionFromLatLng(
+        this.service.selectedLocation.Latitude,
+        this.service.selectedLocation.Longitude);
+      this.map.addMarker(selectedLocationMarker);
     }
   }
 
