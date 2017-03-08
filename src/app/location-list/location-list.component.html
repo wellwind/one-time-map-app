@@ -1,4 +1,4 @@
-<ListView [items]="savedLocations | async" (itemTap)="onItemTap($event)">
+<ListView [items]="_savedLocations" (itemTap)="onItemTap($event)">
     <template let-item="item">
       <Label [text]='item.Name'></Label>
     </template>
