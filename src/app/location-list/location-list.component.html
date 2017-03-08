@@ -1,5 +1,8 @@
+<Label class="header" text="最近10筆紀錄的位置"></Label>
 <ListView [items]="_savedLocations" (itemTap)="onItemTap($event)">
-    <template let-item="item">
+  <template let-item="item">
+    <StackLayout class="list-item">
       <Label [text]='item.Name'></Label>
-    </template>
+    </StackLayout>
+  </template>
 </ListView>
