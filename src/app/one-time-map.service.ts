@@ -22,6 +22,14 @@ export class OneTimeMapService {
     });
   }
 
+  _saveLocations() {
+    localStorage.setItem('locations', JSON.stringify(this._locations));
+  }
+
+  _notifyLocations() {
+    this._savedLocationSubscriber.next(this._locations);
+  }
+
   remberLocation(name, latitude, longitude) {
     const toAddLocation: SavedLocation = {
       Name: name,
@@ -29,11 +37,18 @@ export class OneTimeMapService {
       Longitude: longitude
     };
     this._locations.push(toAddLocation);
-    localStorage.setItem('locations', JSON.stringify(this._locations));
-    this._savedLocationSubscriber.next(this._locations);
+    this._saveLocations();
+    this._notifyLocations();
   }
 
   selectLocation(index) {
     this.selectedLocation = this._locations[index];
+  }
+
+  deleteLocation(index) {
+    const item = this._locations[index];
+    this._locations.splice(this._locations.indexOf(item), 1);
+    this._saveLocations();
+    this._notifyLocations();
   }
 }
