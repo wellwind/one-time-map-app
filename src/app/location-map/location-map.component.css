@@ -1,6 +1,21 @@
-.save-button {
-    color: black;
-    background-color: #30bcff;
-    border-radius: 5px;
-    padding: 3px;
+.toolbar-buttons {
+  margin: 3px;
+  border-radius: 5px;
+  padding: 3px;
 }
+
+.toolbar-buttons.save{
+  color: black;
+  background-color: #30bcff;
+}
+
+.toolbar-buttons.focus{
+  color: white;
+  background-color: #00796b;
+}
+
+.toolbar-buttons.none{
+  color: white;
+  background-color: #009688;
+}
+

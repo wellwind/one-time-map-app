@@ -24,6 +24,8 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   watchLocationId;
   location: geo.Location;
   map: GoogleMaps.MapView;
+  viewMode = 'me';
+  caremaLocation: { latitude: number; longitude: number; };
 
   constructor(private zone: NgZone, private service: OneTimeMapService) { }
 
@@ -49,14 +51,27 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   handleWatchLocationSuccess(loc) {
     if (loc) {
       this.location = loc;
+      this._setCaremaLocation();
 
       this.map.removeAllMarkers();
-
       this._addCurrentLocationToMap();
       this._addSelectedLocationToMap();
     }
   }
 
+  private _setCaremaLocation() {
+    if (this.hasSelectedLocation() && this.viewMode === 'saved') {
+      this.caremaLocation = {
+        latitude: this.service.selectedLocation.Latitude,
+        longitude: this.service.selectedLocation.Longitude
+      };
+    } else {
+      this.caremaLocation = {
+        latitude: this.location.latitude,
+        longitude: this.location.longitude
+      };
+    }
+  }
 
   private _addCurrentLocationToMap() {
     const marker = new GoogleMaps.Marker();
@@ -65,7 +80,7 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   }
 
   private _addSelectedLocationToMap() {
-    if (this.service.selectedLocation) {
+    if (this.hasSelectedLocation()) {
       const selectedLocationMarker = new GoogleMaps.Marker();
       selectedLocationMarker.position = GoogleMaps.Position.positionFromLatLng(
         this.service.selectedLocation.Latitude,
@@ -109,5 +124,9 @@ export class LocationMapComponent implements OnInit, OnDestroy {
           this.location.longitude);
       }
     });
+  }
+
+  hasSelectedLocation() {
+    return this.service.selectedLocation !== undefined;
   }
 }

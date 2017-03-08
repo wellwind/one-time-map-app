@@ -1,3 +1,4 @@
+import { Observer } from './../platforms/ios/build/emulator/src.app/app/tns_modules/rxjs/Observer.d';
 import { SavedLocation } from './shared/interfaces/saved-location';
 import { NgZone, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -15,7 +16,7 @@ export class OneTimeMapService {
   constructor(private zone: NgZone) {
     this._locations = JSON.parse(localStorage.getItem('locations')) || [];
 
-    this.savedLocation = Observable.create((observable: any) => {
+    this.savedLocation = Observable.create((observable: Observer<Location[]>) => {
       this._savedLocationSubscriber = observable;
       this._savedLocationSubscriber.next(this._locations);
     });

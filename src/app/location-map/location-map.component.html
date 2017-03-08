@@ -1,14 +1,11 @@
 <GridLayout>
-  <MapView
-    [latitude]="location?.latitude"
-    [longitude]="location?.longitude"
-    zoom="15"
-    bearing="0"
-    tilt="0"
-    padding="0"
-    (mapReady)="onMapReady($event)"></MapView>
+  <MapView [latitude]="caremaLocation?.latitude" [longitude]="caremaLocation?.longitude" zoom="15" bearing="0" tilt="0" padding="0" (mapReady)="onMapReady($event)"></MapView>
 
   <AbsoluteLayout>
-    <Button class="save-button" text="記住這裡" left="5" top="5" (tap)="rememberHere()"></Button>
+    <GridLayout columns="*, *, *"  top="5" left="5">
+      <Button col="0" class="toolbar-buttons save" text="記住這裡" (tap)="rememberHere()"></Button>
+      <Button col="1" class="toolbar-buttons focus" [ngClass]="{none: viewMode !== 'me'}" *ngIf="hasSelectedLocation()" text="我的位置" (tap)="viewMode = 'me'"></Button>
+      <Button col="2" class="toolbar-buttons focus" [ngClass]="{none: viewMode !== 'saved'}" *ngIf="hasSelectedLocation()" text="紀錄的位置" (tap)="viewMode = 'saved'"></Button>
+    </GridLayout>
   </AbsoluteLayout>
 </GridLayout>
