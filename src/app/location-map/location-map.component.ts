@@ -8,6 +8,7 @@ import * as Dialogs from 'ui/dialogs';
 import * as geo from 'nativescript-geolocation';
 import * as GoogleMaps from 'nativescript-google-maps-sdk';
 import * as GoogleMapsUtils from 'nativescript-google-maps-utils';
+import { Directions } from 'nativescript-directions';
 import { registerElement } from 'nativescript-angular/element-registry';
 import * as moment from 'moment';
 
@@ -128,5 +129,25 @@ export class LocationMapComponent implements OnInit, OnDestroy {
 
   hasSelectedLocation() {
     return this.service.selectedLocation !== undefined;
+  }
+
+  direction() {
+    const directions = new Directions();
+
+    directions.available().then((available) => {
+      console.log(available);
+      if (available) {
+        directions.navigate({
+          from: {
+            lat: this.location.latitude,
+            lng: this.location.longitude
+          },
+          to: {
+            lat: this.service.selectedLocation.Latitude,
+            lng: this.service.selectedLocation.Longitude
+          }
+        });
+      }
+    });
   }
 }
