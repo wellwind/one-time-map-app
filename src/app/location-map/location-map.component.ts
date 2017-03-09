@@ -11,6 +11,7 @@ import * as GoogleMapsUtils from 'nativescript-google-maps-utils';
 import { Directions } from 'nativescript-directions';
 import { registerElement } from 'nativescript-angular/element-registry';
 import * as moment from 'moment';
+import * as utils from 'utils/utils';
 
 registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
 
@@ -133,7 +134,6 @@ export class LocationMapComponent implements OnInit, OnDestroy {
 
   direction() {
     const directions = new Directions();
-
     directions.available().then((available) => {
       console.log(available);
       if (available) {
@@ -147,6 +147,11 @@ export class LocationMapComponent implements OnInit, OnDestroy {
             lng: this.service.selectedLocation.Longitude
           }
         });
+      } else {
+        let directionUrl = `https://www.google.com/maps/dir/`;
+        directionUrl = `${directionUrl}/${this.location.latitude},${this.location.longitude}`;
+        directionUrl = `${directionUrl}/${this.service.selectedLocation.Latitude},${this.service.selectedLocation.Longitude}`;
+        utils.openUrl(directionUrl);
       }
     });
   }
