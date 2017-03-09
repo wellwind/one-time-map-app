@@ -3,15 +3,14 @@ import { OneTimeMapService } from './../one-time-map.service';
 import { ElementRef, ViewChild, Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Accuracy } from 'ui/enums';
 import { Image } from 'ui/image';
-import * as ImageSource from 'image-source';
 import { Page } from 'ui/page';
 import * as Dialogs from 'ui/dialogs';
 import * as geo from 'nativescript-geolocation';
 import * as GoogleMaps from 'nativescript-google-maps-sdk';
-import { Directions } from 'nativescript-directions';
 import { registerElement } from 'nativescript-angular/element-registry';
+import * as ImageSource from 'image-source';
 import * as moment from 'moment';
-import * as utils from 'utils/utils';
+
 
 registerElement('MapView', () => require('nativescript-google-maps-sdk').MapView);
 
@@ -140,26 +139,13 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   }
 
   direction() {
-    const directions = new Directions();
-    directions.available().then((available) => {
-      console.log(available);
-      if (available) {
-        directions.navigate({
-          from: {
-            lat: this.location.latitude,
-            lng: this.location.longitude
-          },
-          to: {
-            lat: this.service.selectedLocation.Latitude,
-            lng: this.service.selectedLocation.Longitude
-          }
-        });
-      } else {
-        let directionUrl = `https://www.google.com/maps/dir/`;
-        directionUrl = `${directionUrl}/${this.location.latitude},${this.location.longitude}`;
-        directionUrl = `${directionUrl}/${this.service.selectedLocation.Latitude},${this.service.selectedLocation.Longitude}`;
-        utils.openUrl(directionUrl);
-      }
-    });
+    this.mapService.direction(
+      {
+        latitude: this.location.latitude,
+        longitude: this.location.longitude
+      }, {
+        latitude: this.service.selectedLocation.Latitude,
+        longitude: this.service.selectedLocation.Longitude
+      });
   }
 }
