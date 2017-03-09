@@ -1,3 +1,4 @@
+import { GoogleMapService } from './google-map.service';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { AppRoutingModule } from './app.routing';
@@ -22,7 +23,8 @@ import { OneTimeMapService } from './one-time-map.service';
     LocationMapComponent
   ],
   providers: [
-    OneTimeMapService
+    OneTimeMapService,
+    GoogleMapService
   ],
   schemas: [
     NO_ERRORS_SCHEMA

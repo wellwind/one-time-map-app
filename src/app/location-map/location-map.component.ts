@@ -1,3 +1,4 @@
+import { GoogleMapService } from './../google-map.service';
 import { OneTimeMapService } from './../one-time-map.service';
 import { ElementRef, ViewChild, Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Accuracy } from 'ui/enums';
@@ -7,7 +8,6 @@ import { Page } from 'ui/page';
 import * as Dialogs from 'ui/dialogs';
 import * as geo from 'nativescript-geolocation';
 import * as GoogleMaps from 'nativescript-google-maps-sdk';
-import * as GoogleMapsUtils from 'nativescript-google-maps-utils';
 import { Directions } from 'nativescript-directions';
 import { registerElement } from 'nativescript-angular/element-registry';
 import * as moment from 'moment';
@@ -29,7 +29,9 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   viewMode = 'me';
   caremaLocation: { latitude: number; longitude: number; };
 
-  constructor(private zone: NgZone, private service: OneTimeMapService) { }
+  constructor(private zone: NgZone,
+    private service: OneTimeMapService,
+    private mapService: GoogleMapService) { }
 
   ngOnInit() {
     if (!geo.isEnabled()) {
@@ -80,23 +82,19 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   }
 
   private _addCurrentLocationToMap() {
-    const marker = new GoogleMaps.Marker();
-    marker.position = GoogleMaps.Position.positionFromLatLng(this.location.latitude, this.location.longitude);
-    this.map.addMarker(marker);
+    this.mapService.addMark(this.map, this.location.latitude, this.location.longitude);
   }
 
   private _addSelectedLocationToMap() {
     if (this.hasSelectedLocation()) {
-      const selectedLocationMarker = new GoogleMaps.Marker();
-      selectedLocationMarker.position = GoogleMaps.Position.positionFromLatLng(
-        this.service.selectedLocation.Latitude,
-        this.service.selectedLocation.Longitude);
-
       const icon = new Image();
       icon.imageSource = ImageSource.fromResource('map-marker-orange.png');
-      selectedLocationMarker.icon = icon;
 
-      this.map.addMarker(selectedLocationMarker);
+      this.mapService.addMark(
+        this.map,
+        this.service.selectedLocation.Latitude,
+        this.service.selectedLocation.Longitude,
+        icon);
     }
   }
 
