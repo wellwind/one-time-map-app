@@ -55,10 +55,14 @@ export class LocationMapComponent implements OnInit, OnDestroy {
       this.location = loc;
       this._setCaremaLocation();
 
-      this.map.removeAllMarkers();
-      this._addCurrentLocationToMap();
-      this._addSelectedLocationToMap();
+      this._setMapMarkers();
     }
+  }
+
+  private _setMapMarkers() {
+    this.map.removeAllMarkers();
+    this._addCurrentLocationToMap();
+    this._addSelectedLocationToMap();
   }
 
   private _setCaremaLocation() {
@@ -130,6 +134,11 @@ export class LocationMapComponent implements OnInit, OnDestroy {
 
   hasSelectedLocation() {
     return this.service.selectedLocation !== undefined;
+  }
+
+  changeViewMode(mode) {
+    this.viewMode = mode;
+    this._setMapMarkers();
   }
 
   direction() {
