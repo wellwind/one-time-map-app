@@ -1,5 +1,5 @@
-import { SavedLocation } from './../platforms/ios/src/app/shared/interfaces/saved-location';
-import { Observer } from './../platforms/ios/build/emulator/src.app/app/tns_modules/rxjs/Observer.d';
+import { Observer } from 'rxjs/Observer';
+import { SavedLocation } from './shared/interfaces/saved-location';
 import { NgZone, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
