@@ -1,8 +1,8 @@
 <StackLayout>
   <StackLayout height="50%">
-    <app-location-map></app-location-map>
+    <app-location-map #locationMap></app-location-map>
   </StackLayout>
   <StackLayout height="50%">
-    <app-location-list></app-location-list>
+    <app-location-list [locationMap]="locationMap"></app-location-list>
   </StackLayout>
 </StackLayout>

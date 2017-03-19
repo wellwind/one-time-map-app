@@ -54,7 +54,7 @@ export class LocationMapComponent implements OnInit, OnDestroy {
   handleWatchLocationSuccess(loc) {
     if (loc) {
       this.location = loc;
-      this._setCaremaLocation();
+      this.setCaremaLocation();
 
       this._setMapMarkers();
     }
@@ -66,7 +66,7 @@ export class LocationMapComponent implements OnInit, OnDestroy {
     this._addSelectedLocationToMap();
   }
 
-  private _setCaremaLocation() {
+  public setCaremaLocation() {
     if (this.hasSelectedLocation() && this.viewMode === 'saved') {
       this.caremaLocation = {
         latitude: this.service.selectedLocation.Latitude,

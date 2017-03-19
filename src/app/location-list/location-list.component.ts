@@ -1,6 +1,7 @@
+import { LocationMapComponent } from './../location-map/location-map.component';
 import { SavedLocation } from './../shared/interfaces/saved-location';
 import { OneTimeMapService } from './../one-time-map.service';
-import { ChangeDetectionStrategy, Component, OnInit, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, NgZone, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import * as dialogs from 'ui/dialogs';
 
@@ -13,6 +14,7 @@ import * as dialogs from 'ui/dialogs';
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class LocationListComponent implements OnInit {
+  @Input() locationMap: LocationMapComponent;
 
   savedLocations: Observable<SavedLocation[]>;
   _savedLocations: SavedLocation[];
@@ -29,8 +31,10 @@ export class LocationListComponent implements OnInit {
     dialogs.action(this._savedLocations[$event.index].Name, '取消', ['顯示', '刪除']).then(result => {
       if (result === '顯示') {
         this.service.selectLocation($event.index);
+        this.locationMap.setCaremaLocation();
       } else if (result === '刪除') {
         this.service.deleteLocation($event.index);
+        this.locationMap.setCaremaLocation();
       }
     });
 
